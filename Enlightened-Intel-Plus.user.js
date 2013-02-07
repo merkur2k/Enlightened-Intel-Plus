@@ -3,7 +3,7 @@
 // @include  http://www.ingress.com/intel*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @grant	none
-// @version     0.2.1
+// @version     0.3
 // ==/UserScript==
 
 /*!
@@ -316,7 +316,26 @@ function addToSidebar(element){
 	var sidebar = document.getElementById("sidebar");
 	if(sidebar === null){
 		document.getElementById("dashboard_container").style.left=sidebar_width+20+"px";
-		
+		//add some styles
+		var css = document.createElement('style');
+		css.type = 'text/css';
+		var styles = '.Sort-header { cursor: pointer }\
+			.sort-down div {\
+				background: url("//commondatastorage.googleapis.com/ingress.com/img/misc_icons/sprite.png") no-repeat scroll -28px -41px transparent;\
+				height: 6px;\
+				width: 14px;\
+				display: inline-block;\
+				margin: 3px;\
+			}\
+			.sort-up div {\
+			background: url("//commondatastorage.googleapis.com/ingress.com/img/misc_icons/sprite.png") no-repeat scroll -28px -47px transparent;\
+			height: 6px;\
+				width: 14px;\
+				display: inline-block;\
+				margin: 3px;\
+			}';
+		css.appendChild(document.createTextNode(styles));
+		document.getElementsByTagName("head")[0].appendChild(css);
 		//The block below keeps all the other crap from loading.
 		//document.getElementById("dashboard_container").style.display="none";
 		//document.getElementById("header").style.display="none";
@@ -365,6 +384,9 @@ function Table(columnSpec){
 		colHead = document.createElement("th");
 		colHead.className = "Sort-header";
 		colHead.appendChild(document.createTextNode(columnSpec[i]["label"]));
+		colHeadSprite = document.createElement("div");
+		colHeadSprite.className="sort-chevron";
+		colHead.appendChild(colHeadSprite);
 		headRow.appendChild(colHead);
 	};
 	
